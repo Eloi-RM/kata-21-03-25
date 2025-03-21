@@ -6,7 +6,7 @@ namespace App\Enum;
 
 enum StatusEnum: string
 {
-    case PENDING = 'Pending';
-    case VALIDATED = 'Dne';
-    case DELETED = 'Deleted';
+    case PENDING = 'PENDING';
+    case VALIDATED = 'VALIDATED';
+    case DELETED = 'DELETED';
 }

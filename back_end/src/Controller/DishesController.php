@@ -27,10 +27,8 @@ final class DishesController extends AbstractController
         header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
         header("Access-Control-Allow-Headers: Content-Type");
 
-        // Récupérer les annonces depuis la base de données
         $dishes = $entityManager->getRepository(Dishes::class)->findAll();
 
-        // Préparer les données pour la réponse JSON
         $dishesData = [];
         foreach ($dishes as $dish) {
             $dishesData[] = [
@@ -38,11 +36,9 @@ final class DishesController extends AbstractController
                 'name' => $dish->getName(),
                 'description' => $dish->getDescription(),
                 'logo' => $dish->getLogo(),
-                // Ajoutez d'autres champs selon vos besoins
             ];
         }
 
-        // Retourner les données sous forme de JSON
         return $this->json($dishesData);
     }
 }
