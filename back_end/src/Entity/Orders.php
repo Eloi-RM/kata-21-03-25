@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\OrdersRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Enum\StatusEnum;
 
 #[ORM\Entity(repositoryClass: OrdersRepository::class)]
 class Orders
@@ -18,6 +19,9 @@ class Orders
 
     #[ORM\Column]
     private ?int $user_id = null;
+
+    #[ORM\Column]
+    private ?StatusEnum $status = null;
 
     public function getId(): ?int
     {
@@ -44,6 +48,18 @@ class Orders
     public function setUserId(int $user_id): static
     {
         $this->user_id = $user_id;
+
+        return $this;
+    }
+
+    public function getStatus(): ?StatusEnum
+    {
+        return $this->status;
+    }
+
+    public function setStatus(StatusEnum $status): static
+    {
+        $this->status = $status;
 
         return $this;
     }
