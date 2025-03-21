@@ -6,6 +6,7 @@ use App\Entity\Orders;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 final class OrdersController extends AbstractController
@@ -61,6 +62,29 @@ final class OrdersController extends AbstractController
             'dish_id' => $order->getDishId(),
             'user_id' => $order->getUserId(),
             'status' => $order->getStatus(),
+        ]);
+    }
+
+    //modify one order
+    #[Route('/order/{id}', methods: ['PUT'])]
+    public function editOrder(EntityManagerInterface $entityManager, int $id): Response
+    {
+        header("Access-Control-Allow-Origin: http://localhost:5173");
+        header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+        header("Access-Control-Allow-Headers: Content-Type");
+
+        $order = $entityManager->getRepository(Orders::class)->find($id);
+
+        if (!$order) {
+            throw $this->createNotFoundException('No order found for id ' . $id);
+        }
+
+        //update status
+        $order->setStatus();
+        $entityManager->flush();
+
+        return $this->redirectToRoute('order_show', [
+            'id' => $order->getId()
         ]);
     }
 }
